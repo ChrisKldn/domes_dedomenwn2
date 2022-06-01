@@ -306,7 +306,6 @@ AVLnode* GetNewNodeAVL(int data){
 
 //Eisagwgh eggrafhs sto AVL dendro
 AVLnode* InsertAVL(AVLnode* node, int data){
-	/* 1. Perform the normal BST insertion */
 	if (node == NULL)
 		return(GetNewNodeAVL(data));
 
@@ -314,44 +313,32 @@ AVLnode* InsertAVL(AVLnode* node, int data){
 		node->left = InsertAVL(node->left, data);
 	else if (data > node->num)
 		node->right = InsertAVL(node->right, data);
-	else // Equal keys are not allowed in BST
+	else
 		return node;
 
-	/* 2. Update height of this ancestor node */
-	node->height = 1 + max(height(node->left),
+		node->height = 1 + max(height(node->left),
 						height(node->right));
 
-	/* 3. Get the balance factor of this ancestor
-		node to check whether this node became
-		unbalanced */
 	int balance = getBalance(node);
 
-	// If this node becomes unbalanced, then
-	// there are 4 cases
+  if (balance > 1 && data < node->left->num)
+  		return rightRotate(node);
 
-	// Left Left Case
-	if (balance > 1 && data < node->left->num)
-		return rightRotate(node);
-
-	// Right Right Case
 	if (balance < -1 && data > node->right->num)
 		return leftRotate(node);
 
-	// Left Right Case
 	if (balance > 1 && data > node->left->num)
 	{
 		node->left = leftRotate(node->left);
 		return rightRotate(node);
 	}
 
-	// Right Left Case
 	if (balance < -1 && data < node->right->num)
 	{
 		node->right = rightRotate(node->right);
 		return leftRotate(node);
 	}
 
-	/* return the (unchanged) node pointer */
 	return node;
 }
 
@@ -375,11 +362,11 @@ AVLnode* SearchAVL(AVLnode* root,int data) {
 void PostorderAVL(AVLnode* node){
     if (node == NULL)
         return;
-    // first recur on left subtree
+
     PostorderAVL(node->left);
-    // then recur on right subtree
+
     PostorderAVL(node->right);
-    // now deal with the node
+
     printf("%d ", node->num);
 }
 
@@ -410,33 +397,27 @@ AVLnode *rightRotate(AVLnode *y){
 	AVLnode *x = y->left;
 	AVLnode *T2 = x->right;
 
-	// Perform rotation
+	// Rotation
 	x->right = y;
 	y->left = T2;
 
-	// Update heights
 	y->height = max(height(y->left), height(y->right))+1;
 	x->height = max(height(x->left), height(x->right))+1;
 
-	// Return new root
 	return x;
 }
 
-// A utility function to left rotate subtree rooted with x
-// See the diagram given above.
 AVLnode *leftRotate(AVLnode *x)
 {
 	AVLnode *y = x->right;
 	AVLnode *T2 = y->left;
 
-	// Perform rotation
+	// Rotation
 	y->left = x;
 	x->right = T2;
 
-	// Update heights
 	x->height = max(height(x->left), height(x->right))+1;
 	y->height = max(height(y->left), height(y->right))+1;
 
-	// Return new root
 	return y;
 }
