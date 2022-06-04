@@ -193,11 +193,11 @@ int main(){
        	}
     	}
 	}else if(answer2==2){
-		PreorderAVL(pateras2);
+		PreorderAVL(riza2);
 	}else if(answer2==3){
-		PostorderAVL(pateras2);
+		PostorderAVL(riza2);
 	}else if(answer2==4){
-		InorderAVL(pateras2);
+		InorderAVL(riza2);
 	}
 
 	return 0;
