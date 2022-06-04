@@ -156,13 +156,13 @@ int main(){
     AVLarray[i]=AVLnode(a2,row2[1],row2[2],row2[3]);
   }
   //Eisagwgh eggrafwn sto dyadiko dendro
-  AVLnode* pateras2;
+  AVLnode* riza2;
   auto start2=high_resolution_clock::now();
   AVLnode* AVLroot = NULL;  // Dhmiourgia adeiou dendrou
   for(int i=0;i<100;i++){
     AVLroot = InsertAVL(AVLroot,AVLarray[i].num);
     if (i==0)
-      pateras2=AVLroot;
+      riza2=AVLroot;
   }
   auto stop2=high_resolution_clock::now();
   auto duration2 = duration_cast<microseconds>(stop - start);
